@@ -1,12 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { WeatherCardComponent } from '../weather-card';
 import { DataFactoryService } from '../../../data-access/data-factory.service';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { WeatherStateService } from '../../../data-access/weather.state.service';
 import { randomNumberArray } from '../../../../shared/utils';
 import { CurrentCitiesStateService } from '../../../data-access/current-citites.service';
 import { citiesId } from '../../../utils/types/cities.config';
 import { CommonModule } from '@angular/common';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'weather-card-container',
@@ -21,6 +22,8 @@ export class WeatherCardContainerComponent implements OnInit {
   $weather = inject(WeatherStateService).weather;
   $currentCitities = inject(CurrentCitiesStateService).currentCititesIds;
 
+  timer$ = interval(60000);
+
   getCities() {
     this.$currentCitities().forEach((num) => {
       this.#dataFactory
@@ -31,6 +34,10 @@ export class WeatherCardContainerComponent implements OnInit {
             const temperature = String(main.temp);
             const cityName = name;
             const description = weather[0].description;
+
+            if (this.$weather().length >= 3) {
+              this.$weather.set([]);
+            }
 
             this.$weather.update((value) => {
               return [
@@ -48,6 +55,17 @@ export class WeatherCardContainerComponent implements OnInit {
     });
   }
 
+  refreshCititesEveryMinute() {
+    this.timer$
+      .pipe(
+        map(() => {
+          this.initCurrentsCitiesIds();
+          this.getCities();
+        })
+      )
+      .subscribe();
+  }
+
   initCurrentsCitiesIds() {
     const randomNumbers = randomNumberArray(0, 4, 3);
 
@@ -61,5 +79,6 @@ export class WeatherCardContainerComponent implements OnInit {
   ngOnInit(): void {
     this.initCurrentsCitiesIds();
     this.getCities();
+    // this.refreshCititesEveryMinute();
   }
 }
