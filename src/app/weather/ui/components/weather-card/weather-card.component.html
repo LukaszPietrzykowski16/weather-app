@@ -3,6 +3,6 @@
   <div class="weather-card-description">{{ weather.description }}</div>
   <div class="weather-card-icon">⛅</div>
   <div class="weather-card-temperature">
-    {{ weather.temperature }}
+    {{ weather.temperature | kelvinToCelsius }}°C
   </div>
 </div>

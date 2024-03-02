@@ -31,7 +31,7 @@ export class WeatherCardContainerComponent implements OnInit {
         .pipe(
           map((apiWeather) => {
             const { main, name, weather } = apiWeather;
-            const temperature = String(main.temp);
+            const temperature = main.temp;
             const cityName = name;
             const description = weather[0].description;
 

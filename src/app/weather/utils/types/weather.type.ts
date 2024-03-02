@@ -1,6 +1,6 @@
 export type Weather = {
   cityName: string;
-  temperature: string;
+  temperature: number;
   imgUrl?: string;
   description: string;
 };
