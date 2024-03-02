@@ -1,4 +1,9 @@
 export type WeatherApi = {
+  cnt: number;
+  list: WeatherInformation[];
+};
+
+export type WeatherInformation = {
   coord: Coord;
   weather: Weather[];
   base: string;

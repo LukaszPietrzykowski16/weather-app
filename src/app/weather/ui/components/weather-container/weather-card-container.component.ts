@@ -1,13 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { WeatherCardComponent } from '../weather-card';
 import { DataFactoryService } from '../../../data-access/data-factory.service';
-import { map, take } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { WeatherStateService } from '../../../data-access/weather.state.service';
 import { randomNumberArray } from '../../../../shared/utils';
 import { CurrentCitiesStateService } from '../../../data-access/current-citites.service';
 import { citiesId } from '../../../utils/types/cities.config';
 import { CommonModule } from '@angular/common';
-import { interval } from 'rxjs';
+import { Subject, interval } from 'rxjs';
+import { Weather } from '../../../utils/types/weather.type';
 
 @Component({
   selector: 'weather-card-container',
@@ -19,82 +20,82 @@ import { interval } from 'rxjs';
 export class WeatherCardContainerComponent implements OnInit {
   #dataFactory = inject(DataFactoryService);
 
-  $weather = inject(WeatherStateService).weather;
-  $currentCitities = inject(CurrentCitiesStateService).currentCititesIds;
+  weather$ = inject(WeatherStateService).weather;
+  currentCitities$ = inject(CurrentCitiesStateService).currentCititesIds;
 
-  $timer = interval(60000);
-  $weatherTimer = interval(5000);
+  timer$ = interval(60000);
+  weatherTimer$ = interval(10000);
 
-  getCities() {
-    this.$currentCitities().forEach((num) => {
-      this.#dataFactory
-        .getWeatherInRandomCity(num)
-        .pipe(
-          map((apiWeather) => {
-            const { main, name, weather } = apiWeather;
-            const temperature = main.temp;
-            const cityName = name;
-            const description = weather[0].description;
+  destroy$ = new Subject<void>();
 
-            if (this.$weather().length >= 3) {
-              this.$weather.set([]);
-            }
+  #getCities() {
+    this.#dataFactory
+      .getWeatherInRandomCity(this.currentCitities$())
+      .pipe(
+        map((apiWeather) => {
+          const weatherInformation = apiWeather.list.map((information) => {
+            const temperature = information.main.temp;
+            const cityName = information.name;
+            const description = information.weather[0].description;
+            return { temperature, cityName, description };
+          });
 
-            this.$weather.update((value) => {
-              return [
-                ...value,
-                {
-                  temperature,
-                  cityName,
-                  description,
-                },
-              ];
-            });
-          })
-        )
-        .subscribe();
-    });
+          if (this.weather$().length >= 3) {
+            this.weather$.set([]);
+          }
+
+          this.weather$.set(weatherInformation);
+        })
+      )
+      .subscribe();
   }
 
-  initCurrentsCitiesIds() {
+  #initCurrentsCitiesIds() {
     const randomNumbers = randomNumberArray(0, 4, 3);
 
-    this.$currentCitities.set([
+    this.currentCitities$.set([
       citiesId[randomNumbers[0]],
       citiesId[randomNumbers[1]],
       citiesId[randomNumbers[2]],
     ]);
   }
 
-  refreshCititesEveryMinute() {
-    this.$timer
+  #refreshCititesEveryMinute() {
+    this.timer$
       .pipe(
+        takeUntil(this.destroy$),
         map(() => {
-          this.initCurrentsCitiesIds();
-          this.getCities();
+          this.#initCurrentsCitiesIds();
+          this.#getCities();
         })
       )
       .subscribe();
   }
 
-  refreshWeatherEveryTenSeconds() {
-    this.$weatherTimer
+  #refreshWeatherEveryTenSeconds() {
+    this.weatherTimer$
       .pipe(
+        takeUntil(this.destroy$),
         map(() => {
-          this.getCities();
+          this.#getCities();
         })
       )
       .subscribe();
   }
 
-  trackByFn(index: number) {
-    return index;
+  trackByFn(index: number, weather: Weather) {
+    return weather.cityName;
   }
 
   ngOnInit(): void {
-    this.initCurrentsCitiesIds();
-    this.getCities();
-    this.refreshCititesEveryMinute();
-    this.refreshWeatherEveryTenSeconds();
+    this.#initCurrentsCitiesIds();
+    this.#getCities();
+    this.#refreshCititesEveryMinute();
+    this.#refreshWeatherEveryTenSeconds();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

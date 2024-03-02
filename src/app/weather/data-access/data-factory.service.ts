@@ -10,9 +10,11 @@ import { citiesId } from '../utils/types/cities.config';
 export class DataFactoryService {
   #httpClient = inject(HttpClient);
 
-  getWeatherInRandomCity(cityId: string) {
+  getWeatherInRandomCity(citiesId: string[]) {
     return this.#httpClient.get<WeatherApi>(
-      `https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/group?id=${citiesId.join(
+        ','
+      )}&appid=${API_KEY}`
     );
   }
 }
