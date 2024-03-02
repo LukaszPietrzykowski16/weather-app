@@ -1,3 +1,6 @@
 <main class="main">
-  <weather-card *ngFor="let weather of $weather()" [weather]="weather" />
+  <weather-card
+    *ngFor="let weather of $weather(); trackBy: trackByFn"
+    [weather]="weather"
+  />
 </main>

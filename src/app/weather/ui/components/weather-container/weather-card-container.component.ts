@@ -22,7 +22,8 @@ export class WeatherCardContainerComponent implements OnInit {
   $weather = inject(WeatherStateService).weather;
   $currentCitities = inject(CurrentCitiesStateService).currentCititesIds;
 
-  timer$ = interval(60000);
+  $timer = interval(60000);
+  $weatherTimer = interval(5000);
 
   getCities() {
     this.$currentCitities().forEach((num) => {
@@ -55,17 +56,6 @@ export class WeatherCardContainerComponent implements OnInit {
     });
   }
 
-  refreshCititesEveryMinute() {
-    this.timer$
-      .pipe(
-        map(() => {
-          this.initCurrentsCitiesIds();
-          this.getCities();
-        })
-      )
-      .subscribe();
-  }
-
   initCurrentsCitiesIds() {
     const randomNumbers = randomNumberArray(0, 4, 3);
 
@@ -76,9 +66,35 @@ export class WeatherCardContainerComponent implements OnInit {
     ]);
   }
 
+  refreshCititesEveryMinute() {
+    this.$timer
+      .pipe(
+        map(() => {
+          this.initCurrentsCitiesIds();
+          this.getCities();
+        })
+      )
+      .subscribe();
+  }
+
+  refreshWeatherEveryTenSeconds() {
+    this.$weatherTimer
+      .pipe(
+        map(() => {
+          this.getCities();
+        })
+      )
+      .subscribe();
+  }
+
+  trackByFn(index: number) {
+    return index;
+  }
+
   ngOnInit(): void {
     this.initCurrentsCitiesIds();
     this.getCities();
-    // this.refreshCititesEveryMinute();
+    this.refreshCititesEveryMinute();
+    this.refreshWeatherEveryTenSeconds();
   }
 }
