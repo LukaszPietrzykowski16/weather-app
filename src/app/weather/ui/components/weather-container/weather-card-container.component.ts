@@ -4,6 +4,7 @@ import { DataFactoryService } from '../../../data-access/data-factory.service';
 import { Weather } from '../../../utils/types/weather.type';
 import { map } from 'rxjs/operators';
 import { WeatherApi } from '../../../utils/types/weather-api.type';
+import { WeatherStateService } from '../../../data-access/weather.state.service';
 
 @Component({
   selector: 'weather-card-container',
@@ -14,14 +15,25 @@ import { WeatherApi } from '../../../utils/types/weather-api.type';
 })
 export class WeatherCardContainerComponent {
   #dataFactory = inject(DataFactoryService);
-  weather = {} as WeatherApi;
+
+  $weather = inject(WeatherStateService).weather;
 
   getCity() {
     this.#dataFactory
       .getWeatherInRandomCity()
       .pipe(
-        map((weather) => {
-          this.weather = weather;
+        map((apiWeather) => {
+          console.log(apiWeather);
+          const { main, name, weather } = apiWeather;
+          const temperature = String(main.temp);
+          const cityName = name;
+          const description = weather[0].description;
+
+          this.$weather.set({
+            temperature,
+            cityName,
+            description,
+          });
         })
       )
       .subscribe();

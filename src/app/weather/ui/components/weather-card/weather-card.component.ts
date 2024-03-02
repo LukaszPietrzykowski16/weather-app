@@ -9,7 +9,6 @@ export class WeatherCardComponent {
   @Input() weather = {
     cityName: 'Łódź',
     temperature: '7',
-    imgUrl: '',
     description: 'cloudy',
   };
 }
