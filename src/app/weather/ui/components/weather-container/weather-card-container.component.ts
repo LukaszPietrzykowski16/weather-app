@@ -8,11 +8,13 @@ import { WeatherStateService } from '../../../data-access/weather.state.service'
 import { randomNumberArray } from '../../../../shared/utils';
 import { CurrentCitiesStateService } from '../../../data-access/current-citites.service';
 import { citiesId } from '../../../utils/types/cities.config';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'weather-card-container',
   standalone: true,
-  imports: [WeatherCardComponent],
+  imports: [WeatherCardComponent, CommonModule],
   templateUrl: './weather-card-container.component.html',
   styleUrl: './weather-card-container.component.css',
 })
@@ -23,27 +25,34 @@ export class WeatherCardContainerComponent implements OnInit {
   $currentCitities = inject(CurrentCitiesStateService).currentCititesIds;
 
   getCities() {
-    this.#dataFactory
-      .getWeatherInRandomCity()
-      .pipe(
-        map((apiWeather) => {
-          const { main, name, weather } = apiWeather;
-          const temperature = String(main.temp);
-          const cityName = name;
-          const description = weather[0].description;
+    this.$currentCitities().forEach((num) => {
+      this.#dataFactory
+        .getWeatherInRandomCity(num)
+        .pipe(
+          map((apiWeather) => {
+            const { main, name, weather } = apiWeather;
+            const temperature = String(main.temp);
+            const cityName = name;
+            const description = weather[0].description;
 
-          this.$weather.set({
-            temperature,
-            cityName,
-            description,
-          });
-        })
-      )
-      .subscribe();
+            this.$weather.update((value) => {
+              return [
+                ...value,
+                {
+                  temperature,
+                  cityName,
+                  description,
+                },
+              ];
+            });
+          })
+        )
+        .subscribe();
+    });
   }
 
   initCurrentsCitiesIds() {
-    const randomNumbers = randomNumberArray(0, 5, 3);
+    const randomNumbers = randomNumberArray(0, 4, 3);
 
     this.$currentCitities.set([
       citiesId[randomNumbers[0]],

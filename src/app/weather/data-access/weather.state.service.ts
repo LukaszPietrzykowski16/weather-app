@@ -5,9 +5,5 @@ import { Weather } from '../utils/types/weather.type';
   providedIn: 'root',
 })
 export class WeatherStateService {
-  weather = signal<Weather>({
-    cityName: 'Łódź',
-    temperature: '7',
-    description: 'cloudy',
-  });
+  weather = signal<Weather[]>([]);
 }

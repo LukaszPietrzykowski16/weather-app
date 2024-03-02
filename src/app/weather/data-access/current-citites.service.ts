@@ -5,5 +5,5 @@ import { Weather } from '../utils/types/weather.type';
   providedIn: 'root',
 })
 export class CurrentCitiesStateService {
-  currentCititesIds = signal<String[]>([]);
+  currentCititesIds = signal<string[]>([]);
 }
