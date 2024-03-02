@@ -4,10 +4,6 @@ import { Weather } from '../utils/types/weather.type';
 @Injectable({
   providedIn: 'root',
 })
-export class WeatherStateService {
-  weather = signal<Weather>({
-    cityName: 'Łódź',
-    temperature: '7',
-    description: 'cloudy',
-  });
+export class CurrentCitiesStateService {
+  currentCititesIds = signal<String[]>([]);
 }
