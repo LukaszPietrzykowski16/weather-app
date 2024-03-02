@@ -1,15 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { WeatherCardComponent } from '../weather-card';
 import { DataFactoryService } from '../../../data-access/data-factory.service';
-import { Weather } from '../../../utils/types/weather.type';
 import { map } from 'rxjs/operators';
-import { WeatherApi } from '../../../utils/types/weather-api.type';
 import { WeatherStateService } from '../../../data-access/weather.state.service';
 import { randomNumberArray } from '../../../../shared/utils';
 import { CurrentCitiesStateService } from '../../../data-access/current-citites.service';
 import { citiesId } from '../../../utils/types/cities.config';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'weather-card-container',

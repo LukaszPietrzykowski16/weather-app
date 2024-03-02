@@ -1,11 +1,16 @@
 .main {
   width: 100%;
-  min-height: 80vh;
+  min-height: 90vh;
   display: flex;
-  justify-content: center;
+  gap: 10px;
+  justify-content: space-around;
   align-items: center;
-
   box-sizing: inherit;
   position: relative;
-  background-color: rgb(26, 26, 26);
+}
+
+@media only screen and (max-width: 950px) {
+  .main {
+    flex-direction: column;
+  }
 }

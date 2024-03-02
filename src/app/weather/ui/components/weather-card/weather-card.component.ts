@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'weather-card',
   templateUrl: './weather-card.component.html',
   standalone: true,
+  styleUrl: './weather-card.component.css',
 })
 export class WeatherCardComponent {
   @Input() weather = {

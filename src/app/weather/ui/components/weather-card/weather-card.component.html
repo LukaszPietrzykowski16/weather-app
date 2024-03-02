@@ -1,8 +1,8 @@
-<div>
-  <div>{{ weather.cityName }}</div>
-  <div>
+<div class="weather-card">
+  <div class="weather-card-header">{{ weather.cityName }}</div>
+  <div class="weather-card-description">{{ weather.description }}</div>
+  <div class="weather-card-icon">⛅</div>
+  <div class="weather-card-temperature">
     {{ weather.temperature }}
   </div>
-  <!-- <div><img src="{{ weather.imgUrl }}" alt="{{ weather.description }}" /></div> -->
-  <div>{{ weather.description }}</div>
 </div>
