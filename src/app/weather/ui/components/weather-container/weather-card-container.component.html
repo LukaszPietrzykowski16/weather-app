@@ -1,6 +1,15 @@
 <main class="main">
+  @if (weather$().length === 3) {
   <weather-card
     *ngFor="let weather of weather$(); trackBy: trackByFn"
     [weather]="weather"
   />
+
+  } @else {
+  <div class="loader-container">
+    <span class="loader-container-sun"> 🌞 </span>
+    <span> Loading </span>
+  </div>
+
+  }
 </main>

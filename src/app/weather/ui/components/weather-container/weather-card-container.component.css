@@ -9,6 +9,29 @@
   position: relative;
 }
 
+.loader-container {
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.loader-container-sun {
+  display: flex;
+  justify-content: center;
+  font-size: 32px;
+  align-items: center;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media only screen and (max-width: 950px) {
   .main {
     flex-direction: column;

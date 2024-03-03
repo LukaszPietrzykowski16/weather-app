@@ -88,6 +88,7 @@ export class WeatherCardContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.weather$());
     this.#initCurrentsCitiesIds();
     this.#getCities();
     this.#refreshCititesEveryMinute();
