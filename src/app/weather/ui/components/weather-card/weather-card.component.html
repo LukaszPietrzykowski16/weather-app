@@ -1,8 +1,10 @@
-<div class="weather-card">
-  <div class="weather-card-header">{{ weather.cityName }}</div>
-  <div class="weather-card-description">{{ weather.description }}</div>
-  <div class="weather-card-icon">⛅</div>
-  <div class="weather-card-temperature">
-    {{ weather.temperature | kelvinToCelsius }}°C
+<a [routerLink]="['/city', weather.cityName]">
+  <div class="weather-card">
+    <div class="weather-card-header">{{ weather.cityName }}</div>
+    <div class="weather-card-description">{{ weather.description }}</div>
+    <div class="weather-card-icon">⛅</div>
+    <div class="weather-card-temperature">
+      {{ weather.temperature | kelvinToCelsius }}°C
+    </div>
   </div>
-</div>
+</a>

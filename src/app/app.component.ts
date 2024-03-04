@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { WeatherCardContainerComponent } from './weather/ui/components';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from './shared/ui/components/header/header.component';
 import { FooterComponent } from './shared/ui/components/footer/footer.component';
+import { routes } from './app.routes';
+import { AppRoutingModule } from './app.routing.module';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,7 @@ import { FooterComponent } from './shared/ui/components/footer/footer.component'
     CommonModule,
     HeaderComponent,
     FooterComponent,
+    AppRoutingModule,
   ],
 })
 export class AppComponent {
