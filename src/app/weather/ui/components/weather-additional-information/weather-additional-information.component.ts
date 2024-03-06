@@ -1,22 +1,18 @@
 import { Component, Input, inject } from '@angular/core';
 import { kelvinToCelsiusPipe } from '../../../../shared/utils/pipes/kelvin-to-celsius.pipe';
-import { Weather } from '../../../utils/types/weather.type';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { WeatherStateService } from '../../../data-access/weather.state.service';
 import { DataFactoryService } from '../../../data-access/data-factory.service';
 import { map } from 'rxjs';
-import {
-  WeatherApi,
-  WeatherInformation,
-} from '../../../utils/types/weather-api.type';
+import { WeatherInformation } from '../../../utils/types/weather-api.type';
+import { MapComponent } from '../../../../shared/ui/components/map/map.component';
 
 @Component({
   selector: 'weather-additional-information',
   templateUrl: './weather-additional-information.component.html',
   standalone: true,
   styleUrl: './weather-additional-information.component.css',
-  imports: [kelvinToCelsiusPipe, CommonModule],
+  imports: [kelvinToCelsiusPipe, CommonModule, MapComponent],
 })
 export class WeatherAdditionalInformationComponent {
   #route = inject(ActivatedRoute);
@@ -35,7 +31,6 @@ export class WeatherAdditionalInformationComponent {
       .getWeatherInExactCity(this.cityId)
       .pipe(
         map((data) => {
-          console.log(data);
           this.weather = data;
         })
       )

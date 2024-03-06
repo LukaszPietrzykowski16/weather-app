@@ -1,16 +1,16 @@
 section {
   width: 100%;
+  height: 80vh;
   display: flex;
   justify-content: center;
 }
 
 .main {
   width: 70%;
-  min-height: 90vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
-  justify-content: start;
+  justify-content: space-around;
   align-items: center;
   box-sizing: inherit;
   position: relative;
@@ -21,20 +21,24 @@ section {
 
 .weather-card-description {
   font-size: 14px;
-  text-align: center;
 }
 
 .weather-card-header {
-  font-size: 32px;
-  text-align: center;
+  font-size: 64px;
 }
 
 .weather-card-icon {
   font-size: 82px;
-  text-align: center;
 }
 
 .weather-card-temperature {
   font-size: 32px;
-  text-align: center;
+}
+
+.map {
+  width: 50%;
+  height: 50%;
+}
+
+.info {
 }
