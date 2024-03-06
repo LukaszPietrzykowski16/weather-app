@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { API_KEY } from './api-keys/API_KEY';
-import { WeatherApi } from '../utils/types/weather-api.type';
+import {
+  WeatherApi,
+  WeatherInformation,
+} from '../utils/types/weather-api.type';
 import { citiesId } from '../utils/types/cities.config';
 
 @Injectable({
@@ -15,6 +18,12 @@ export class DataFactoryService {
       `https://api.openweathermap.org/data/2.5/group?id=${citiesId.join(
         ','
       )}&appid=${API_KEY}`
+    );
+  }
+
+  getWeatherInExactCity(cityId: string) {
+    return this.#httpClient.get<WeatherInformation>(
+      `https://api.openweathermap.org/data/2.5/weather?id=${'3093133'}&appid=${API_KEY}`
     );
   }
 }

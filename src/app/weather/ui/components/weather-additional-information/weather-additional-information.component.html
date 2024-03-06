@@ -1,1 +1,16 @@
-<div>id:</div>
+<section>
+  <div class="main">
+    <div class="weather-card-header">{{ weather.name }}</div>
+    <div class="weather-card-description">
+      {{ weather.main.temp | kelvinToCelsius }}°C
+    </div>
+
+    <div class="weather-card-description">
+      Feels like: {{ weather.main.feels_like | kelvinToCelsius }}°C
+    </div>
+    <div>Wind</div>
+    <div>
+      degreeas: {{ weather.wind.deg }}° speed: {{ weather.wind.speed }}m/s
+    </div>
+  </div>
+</section>
