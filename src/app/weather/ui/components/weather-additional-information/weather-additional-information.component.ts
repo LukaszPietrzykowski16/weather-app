@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { kelvinToCelsiusPipe } from '../../../../shared/utils/pipes/kelvin-to-celsius.pipe';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import { MapComponent } from '../../../../shared/ui/components/map/map.component
   styleUrl: './weather-additional-information.component.css',
   imports: [kelvinToCelsiusPipe, CommonModule, MapComponent],
 })
-export class WeatherAdditionalInformationComponent {
+export class WeatherAdditionalInformationComponent implements OnInit {
   #route = inject(ActivatedRoute);
 
   #dataFactoryService = inject(DataFactoryService);
