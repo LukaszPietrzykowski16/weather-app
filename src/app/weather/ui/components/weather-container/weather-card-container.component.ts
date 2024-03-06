@@ -33,11 +33,16 @@ export class WeatherCardContainerComponent implements OnInit {
       .getWeatherInRandomCity(this.currentCitities$())
       .pipe(
         map((apiWeather) => {
+          console.log(apiWeather);
           const weatherInformation = apiWeather.list.map((information) => {
             const temperature = information.main.temp;
+            const id = information.id;
             const cityName = information.name;
             const description = information.weather[0].description;
-            return { temperature, cityName, description };
+            const lon = information.coord.lon;
+            const lat = information.coord.lat;
+            const imgUrl = information.weather[0].icon;
+            return { temperature, cityName, description, lon, lat, id, imgUrl };
           });
 
           if (this.weather$().length >= 3) {

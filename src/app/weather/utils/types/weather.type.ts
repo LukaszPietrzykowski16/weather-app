@@ -3,4 +3,7 @@ export type Weather = {
   temperature: number;
   imgUrl?: string;
   description: string;
+  lon: number;
+  lat: number;
+  id: number;
 };

@@ -23,7 +23,7 @@ export class DataFactoryService {
 
   getWeatherInExactCity(cityId: string) {
     return this.#httpClient.get<WeatherInformation>(
-      `https://api.openweathermap.org/data/2.5/weather?id=${'3093133'}&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${API_KEY}`
     );
   }
 }
