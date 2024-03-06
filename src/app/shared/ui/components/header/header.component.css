@@ -1,3 +1,8 @@
 header {
   font-size: 32px;
+  background: -webkit-linear-gradient(#0f0f0f, rgb(67, 1, 153));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  text-decoration: none;
 }

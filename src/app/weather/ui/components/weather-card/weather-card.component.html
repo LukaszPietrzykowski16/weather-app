@@ -1,17 +1,13 @@
-<a [routerLink]="['/city', weather.id]">
-  <div class="weather-card">
-    <div class="weather-card-header">{{ weather.cityName }}</div>
-    <div class="weather-card-description">{{ weather.description }}</div>
-    <div class="weather-card-icon">
-      <img
-        src="{{
-          'https://openweathermap.org/img/wn/' + weather.imgUrl + '.png'
-        }}"
-        alt="{{ weather.description }}"
-      />
-    </div>
-    <div class="weather-card-temperature">
-      {{ weather.temperature | kelvinToCelsius }}°C
-    </div>
+<div class="weather-card" [routerLink]="['/city', weather.id]">
+  <div class="weather-card-header">{{ weather.cityName }}</div>
+  <div class="weather-card-description">{{ weather.description }}</div>
+  <div class="weather-card-icon">
+    <img
+      src="{{ 'https://openweathermap.org/img/wn/' + weather.imgUrl + '.png' }}"
+      alt="{{ weather.description }}"
+    />
   </div>
-</a>
+  <div class="weather-card-temperature">
+    {{ weather.temperature | kelvinToCelsius }}°C
+  </div>
+</div>
